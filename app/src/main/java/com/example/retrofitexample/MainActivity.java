@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
         //getPosts();
-        //getComments();
-        getBus();
+        getComments();
+        //getBus();
         //getBus2();
     }
 
