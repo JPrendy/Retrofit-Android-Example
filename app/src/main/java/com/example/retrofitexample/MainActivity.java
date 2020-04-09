@@ -30,12 +30,19 @@ public class MainActivity extends AppCompatActivity {
         textViewResult = findViewById(R.id.text_view_result);
 
 
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-        clientBuilder.sslSocketFactory(RESTMockServer.getSSLSocketFactory(), RESTMockServer.getTrustManager());
+        //For Testing
+//        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+//        clientBuilder.sslSocketFactory(RESTMockServer.getSSLSocketFactory(), RESTMockServer.getTrustManager());
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .client(clientBuilder.build())
+//                .baseUrl(RESTMockServer.getUrl())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+
 
         Retrofit retrofit = new Retrofit.Builder()
-                .client(clientBuilder.build())
-                .baseUrl(RESTMockServer.getUrl())
+                .baseUrl("https://jsonplaceholder.typicode.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
