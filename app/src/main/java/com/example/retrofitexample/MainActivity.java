@@ -8,11 +8,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.appflate.restmock.RESTMockServer;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MainActivity extends AppCompatActivity {
     private TextView textViewResult;
@@ -26,15 +29,20 @@ public class MainActivity extends AppCompatActivity {
 
         textViewResult = findViewById(R.id.text_view_result);
 
+
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        clientBuilder.sslSocketFactory(RESTMockServer.getSSLSocketFactory(), RESTMockServer.getTrustManager());
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .client(clientBuilder.build())
+                .baseUrl(RESTMockServer.getUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
         //getPosts();
-        //getComments();
-        getBus();
+        getComments();
+        //getBus();
         //getBus2();
     }
 
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for (Comment comment : comments){
                     String content = "";
-                    content+= "Text" + comment.getText() + "\n\n";
+                    content+= "Text " + comment.getText() + "\n\n";
 
                     textViewResult.append(content);
                 }
